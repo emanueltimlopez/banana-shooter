@@ -44,7 +44,7 @@ export default class MenuScene extends Phaser.Scene {
 
   _start() {
     //music.stop();
-    this.scene.start('Game', { currentLevel: 0 });
+    this.scene.start('Train');
   }
 
 };

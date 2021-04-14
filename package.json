@@ -5,13 +5,14 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js ",
-    "start": "webpack-dev-server --config webpack.dev.js --open"
+    "start": "webpack-dev-server --config webpack.dev.js --watch"
   },
   "author": "Emanuel López <timbislopez@gmail.com>",
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "devDependencies": {
     "@babel/core": "^7.13.13",
+    "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.13.12",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
@@ -25,6 +26,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^3.3.0",
     "phaser": "^3.54.0"
   }
 }

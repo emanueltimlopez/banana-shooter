@@ -10,8 +10,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.height = 30;
     this.width = 30;
 
-    this.resetSuperMovement = false;
-
     this.update = this.update.bind(this);
     this.shootRight = this.shootRight.bind(this);
     this.shootLeft = this.shootLeft.bind(this);
@@ -20,31 +18,24 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   shootRight() {
-    if (!this.resetSuperMovement) {
-      this.x -= 100;
-      this.resetSuperMovement = true;
-    }
+    this.x += 10;
   }
 
   shootLeft() {
-    if (!this.resetSuperMovement) {
-      this.x -= 100;
-      this.resetSuperMovement = true;
-    }
+    this.x -= 10;
   }
 
   shootTop() {
-    if (!this.resetSuperMovement) {
-      this.x -= 100;
-      this.resetSuperMovement = true;
-    }
+    this.y -= 10;
   }
 
   shootBottom() {
-    if (!this.resetSuperMovement) {
-      this.x += 100;
-      this.resetSuperMovement = true;
-    }
+    this.y += 10;
+  }
+
+  center() {
+    this.x = this.initialPosition.x;
+    this.y = this.initialPosition.y;
   }
 
   update() {

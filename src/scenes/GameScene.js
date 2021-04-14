@@ -15,6 +15,8 @@ export default class GameScene extends Phaser.Scene {
 
   init(data){
     this.currentLevel = data.currentLevel;
+    this.lastTime = 0;
+    this.enemyPosition = 0;
   }
 
   create() {
@@ -29,30 +31,31 @@ export default class GameScene extends Phaser.Scene {
     this.input.keyboard.on('keydown-' + 'W', this._shootTop);
     this.input.keyboard.on('keydown-' + 'S', this._shootBottom);
 
+    const paddingScreen = 70;
     this.places = {
       center: {
         x: this.cameras.main.centerX,
         y: this.cameras.main.centerY
       },
       left: {
-        x: 0,
+        x: paddingScreen,
         y: this.cameras.main.centerY
       },
       right: {
-        x: this.cameras.main.centerX * 2,
+        x: this.cameras.main.centerX * 2 - paddingScreen,
         y: this.cameras.main.centerY
       },
       top: {
         x: this.cameras.main.centerX,
-        y: 0
+        y: paddingScreen
       },
       bottom: {
         x: this.cameras.main.centerX,
-        y: this.cameras.main.centerY * 2
+        y: this.cameras.main.centerY * 2 - paddingScreen
       }
     }
 
-    this.enemies= [
+    this.enemies = [
       new Enemy(this, this.places.left.x, this.places.left.y),
       new Enemy(this, this.places.top.x, this.places.top.y),
       new Enemy(this, this.places.right.x, this.places.right.y),
@@ -61,9 +64,22 @@ export default class GameScene extends Phaser.Scene {
     this.player = new Player(this, this.places.center.x, this.places.center.y);
   }
 
-  update() {
-    this.enemies.forEach(enemy => enemy.update());
+  update(dt) {
+    this.enemies.forEach(enemy => {
+      enemy.update()
+    });
     this.player.update();
+
+    const time = (dt / 1000).toFixed();
+    if (this.lastTime !== time) {
+      this.lastTime = time;
+      this.enemyPosition = Math.floor(Math.random() * 4);
+
+      this.enemies.forEach(enemy => { enemy.hide() });
+      this.enemies[this.enemyPosition].show();
+
+      this.player.center();
+    }
   }
 
   _updateData(_, key, value) {

@@ -14,15 +14,33 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.shoot = this.shoot.bind(this);
 
     this.alive = true;
+    this._visible = false;
   }
 
   die() {
-    this.alive = false;
+    if (this._visible) {
+      this.alive = false;
+    }
+  }
+
+  hide() {
+    this._visible = false;
+  }
+
+  show() {
+    this._visible = true;
   }
 
   shoot() {
   }
 
   update() {
+    if (this.alive && this._visible) {
+      this.setScale(2);
+    } else if (this.alive && !this._visible) {
+      this.setScale(1);
+    } else {
+      this.setScale(.3);
+    }
   }
 }
